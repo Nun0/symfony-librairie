@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte
+{% endblock %}
+
+{% block body %}
+	<main class="container bg-white shadow">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="profil-tab" data-bs-toggle="tab" data-bs-target="#profil-tab-pane" type="button" role="tab" aria-controls="profil-tab-pane" aria-selected="true">Profil</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="favoris-tab" data-bs-toggle="tab" data-bs-target="#favoris-tab-pane" type="button" role="tab" aria-controls="favoris-tab-pane" aria-selected="false">Favoris</button>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="profil-tab-pane" role="tabpanel" aria-labelledby="profil-tab" tabindex="0">
+            <h2>Profil</h2>
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-dark my-3">Modifier</button>
+                {{ form_end(form) }}
+            </div>
+			<div class="tab-pane fade" id="favoris-tab-pane" role="tabpanel" aria-labelledby="favoris-tab" tabindex="0">
+                <h2>Favoris</h2>
+                {% for livre in app.user.favoris %}
+                    <div class="border p-3 my-3">
+                    {{livre.titre}}
+                    </div>
+                {% endfor %}
+            </div>
+		</div>
+	</main>
+{% endblock %}

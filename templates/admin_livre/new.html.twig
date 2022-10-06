@@ -1,0 +1,39 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Nouveau livre
+{% endblock %}
+
+{% block body %}
+	<a href="{{ path('app_admin_livre_index') }}" class="btn btn-dark">Retour à la liste</a>
+	<h1>Créer nouveau livre</h1>
+	{{ include('admin_livre/_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+	<script>
+		$('.select2').select2();
+	</script>
+	<script>
+        const addFormToCollection = (e) => {
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+        const item = document.createElement('li');
+
+        item.innerHTML = collectionHolder
+            .dataset
+            .prototype
+            .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+            );
+
+        collectionHolder.appendChild(item);
+
+        collectionHolder.dataset.index++;
+        };
+        //
+		document
+        .querySelectorAll('.add_item_link').forEach(btn => {
+            btn.addEventListener("click", addFormToCollection)
+        });
+	</script>
+{% endblock %}

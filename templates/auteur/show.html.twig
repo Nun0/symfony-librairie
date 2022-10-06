@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{% if auteur.pseudo is not null %}
+        {{ auteur.pseudo }}
+    {% else %}
+        {{ auteur.prenom }} {% if auteur.nom is not null %}{{ auteur.nom }}{% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+<main class="container bg-white shadow p-4">
+    <h1 class="title">
+        {% if auteur.pseudo is not null %}
+            {{ auteur.pseudo }}
+        {% else %}
+            {{ auteur.prenom }} {% if auteur.nom is not null %}{{ auteur.nom }}{% endif %}
+        {% endif %}
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3">
+            {% if auteur.imageName is not null %}
+                <img src="{{ asset('images/auteur/' ~ auteur.imageName) }}" class="img-fluid" 
+                alt="{% if auteur.pseudo is not null %}
+                        {{ auteur.pseudo }}
+                    {% else %}
+                        {{ auteur.prenom }} {% if auteur.nom is not null %}{{ auteur.nom }}{% endif %}
+                    {% endif %}">
+            {% else %}
+                <img src="{{ asset('images/default.png') }}" class="img-fluid" alt="{{ auteur.prenom }} {{ auteur.nom }}">
+            {% endif %}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9">
+            {% if auteur.biographie is not null %}
+                <div>{{ auteur.biographie|raw}}</div>
+            {% else %}
+                <div>Aucune biographie disponible</div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Livres de ce auteur</h2>
+            <div class="row">
+                {% for livre in auteur.livres %}
+                    <div class="col-12 col-md-6 col-lg-4 d-flex">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ livre.titre }}</h5>
+                                <p class="card-text">{{ livre.description|raw }}</p>
+                                <div class="d-flex justify-content-between align-self-end">
+                                    <div class="btn-group">
+                                        <a href="" class="btn btn-sm btn-outline-secondary">Voir</a>
+                                    </div>
+                                    <small class="text-muted">{{ livre.updatedAt|date('d/m/Y') }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

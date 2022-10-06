@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{categorie.nom}}{% endblock %}
+
+{% block body %}
+<main class="container bg-white shadow p-4">
+    <h1 class="title">{{categorie.nom}}</h1>
+    <div class="row">
+    {% for livre in categorie.livres %}
+        <div class="col-12 col-md-4 col-lg-3 d-flex flex-wrap">
+            <h2>{{ livre.titre }}</h2>
+            <div class="align-self-end">
+                <a href="{{asset('images/livre/' ~ livre.imageName)}}" data-lightbox="image-{{loop.index0}}" data-title="{{ livre.titre}}">
+                    <img src="{{ asset('images/livre/' ~ livre.imageName)}}" alt="{{ livre.titre }}" class="img-fluid">
+                </a>
+                <a href="{{path('app_categorie_show_livre', {'slug': categorie.slug ,'id': livre.id})}}" class="btn btn-dark my-3">Voir de détail</a>
+                {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('app_favoris', {'id':livre.id}) }}" class="btn btn-warning">Ajouter aux favoris</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</main>
+{% endblock %}

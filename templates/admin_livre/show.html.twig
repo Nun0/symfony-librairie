@@ -1,0 +1,66 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Livre
+{% endblock %}
+
+{% block body %}
+	<h1>Livre</h1>
+	<div class="d-flex justify-content-between">
+		<a href="{{ path('app_admin_livre_index') }}" class="btn btn-dark">Retour à la liste</a>
+		{{ include('admin_livre/_delete_form.html.twig') }}
+	</div>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ livre.id }}</td>
+			</tr>
+			<tr>
+				<th>Titre</th>
+				<td>{{ livre.titre }}</td>
+			</tr>
+			<tr>
+				<th>Categorie</th>
+				<td>{{ livre.categorie.nom }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ livre.description|raw  }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				<td>
+					{% if livre.imageName is defined and livre.imageName is not null %}
+						<img src="{{ asset('images/livre/' ~ livre.imageName)}}" alt="" class="img-fluid">
+					{% else %}
+						N/A
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<th>Mise a jour</th>
+				<td>{{ livre.updatedAt ? livre.updatedAt|date('d-m-Y H:i:s') : 'N/A' }}</td>
+			</tr>
+			<tr>
+				<th>Prix</th>
+				<td>
+					{% if livre.prix is defined and livre.prix is not null %}
+						{{ livre.prix }}
+						€
+					{% else %}
+						N/A
+					{% endif %}
+				</td>
+			</tr>
+			{# <tr>
+				<th>Editeur</th>
+				<td>{{ livre.editeur }}</td>
+			</tr> #}
+		</tbody>
+	</table>
+	<a href="{{ path('app_admin_livre_edit', {'id': livre.id}) }}" class="btn btn-success ms-2">
+		<i class="align-middle" data-feather="edit-2"></i>
+	</a>
+
+{% endblock %}

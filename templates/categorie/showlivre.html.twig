@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{livre.titre}}{% endblock %}
+
+{% block body %}
+<main class="container bg-white shadow p-4">
+    <div class="row">
+        <div>
+            <h1 class="title">{{livre.titre}}</h1>
+            <div >Auteur(s) :
+            {% for auteur in livre.auteurs %}
+                <a href="{{path ('app_auteur_show', {'id': auteur.id})}}">
+                    {% if auteur.pseudo is not null  %}
+                        {{auteur.pseudo}}
+                    {% else %}
+                        {{auteur.prenom}} {% if auteur.nom is not null %}{{auteur.nom}}{% endif %}
+                    {% endif %}
+                </a><br>
+            {% endfor %}
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <a href="{{asset('images/livre/' ~ livre.imageName)}}" data-lightbox="{{livre.imageName}}" data-title="{{livre.imageName}}">
+                        <img src="{{ asset('images/livre/' ~ livre.imageName)}}" alt="{{ livre.imageName}}" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-lg-8 col-xl-9">
+                    <div>{{livre.description|raw}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $('.select2').select2();
+</script>
+{% endblock %}

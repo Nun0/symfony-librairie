@@ -1,0 +1,57 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Auteur index
+{% endblock %}
+
+{% block body %}
+	<h1>Auteurs</h1>
+	<a href="{{ path('app_admin_auteur_new') }}" class="btn btn-dark">Nouveau auteur</a>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Image</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Pseudo</th>
+				{# <th>Biographie</th> #}
+				<th>Mise à jour</th>
+				<th class="text-end">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for auteur in auteurs %}
+				<tr>
+					<td>{{ auteur.id }}</td>
+					<td>
+						{% if auteur.imageName is defined and auteur.imageName is not null %}
+							<a href="{{asset('images/auteur/' ~ auteur.imageName)}}" data-lightbox="image-{{ loop.index0 }}" data-title="">
+								<img src="{{ asset('images/auteur/' ~ auteur.imageName)}}" alt="" class="img-admin-small">
+							</a>
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+					<td>{{ auteur.nom }}</td>
+					<td>{{ auteur.prenom }}</td>
+					<td>{{ auteur.pseudo }}</td>
+					{# <td>{{ auteur.biographie }}</td> #}
+					<td>{{ auteur.updatedAt ? auteur.updatedAt|date('d-m-Y H:i:s') : 'N/A' }}</td>
+					<td class="text-end">
+						<a href="{{ path('app_admin_auteur_show', {'id': auteur.id}) }}" class="btn btn-dark">
+							<i class="align-middle" data-feather="eye"></i>
+						</a>
+						<a href="{{ path('app_admin_auteur_edit', {'id': auteur.id}) }}" class="btn btn-success ms-2">
+							<i class="align-middle" data-feather="edit-2"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

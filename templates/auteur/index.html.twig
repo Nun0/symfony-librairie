@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Auteurs
+{% endblock %}
+
+{% block body %}
+
+	<main class="container bg-white shadow p-4">
+		<div class="container col-8">
+			<form action="{{path('app_auteur_search')}}" method="post" class="form-outline flex-fill">
+				<div class="input-group">
+					<div class="form-outline form-control form-control-lg">
+						<input type="search" id="form1" class="form-control" name="search-value"/>
+						<label class="form-label" for="form1">Search</label>
+					</div>
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+		
+		<h1 class="title">Nos auteurs</h1>
+		
+		
+		<p>Retrouver toutes nos auteurs</p>
+		<div class="row">
+			{% for auteur in auteurs %}
+				<div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 mb-3 d-flex flex-wrap">
+					<div class="card">
+						<img src="  {% if auteur.imageName %}{{asset('images/auteur/' ~ auteur.imageName)}}{% else %}{{asset('images/default.png')}}{% endif %}" class="card-img-top" alt="photo auteur">
+						<div class="card-body d-flex flex-wrap justify-content-center">
+							<h5 class="card-title w-100 text-center">
+								{% if auteur.pseudo is not null %}
+									{{ auteur.pseudo }}
+								{% else %}
+									{{ auteur.prenom }}
+									{% if auteur.nom is not null %}
+										{{ auteur.nom }}
+									{% endif %}
+								{% endif %}
+							</h5>
+							{% if auteur.biographie is not null %}
+								<p class="card-text">{{ auteur.biographie|raw }}</p>
+							{% endif %}
+							<a href="{{path('app_auteur_show',{'id': auteur.id})}}" class="btn btn-primary align-self-end">Voir les livres</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</main>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos categories{% endblock %}
+
+{% block body %}
+<main class="container bg-white shadow p-4">
+    <h1 class="title">Nos categories</h1>
+    <p>Retrouver toutes nos categories</p>
+    {% for categorie in categories %}
+        <div>
+            <h2>{{ categorie.nom }}</h2>
+            <a href="{{ path('app_categorie_show', {'slug': categorie.slug})}}" class="btn btn-white shadow">Voir les livres</a>
+        </div>
+    {% endfor %}
+</main>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Médiathèque
+{% endblock %}
+
+{% block body %}
+	<h1>Médiathèque</h1>
+	<a href="{{ path('app_admin_livre_image_new') }}" class="btn btn-dark">Nouveau</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Mise à jour</th>
+				<th>Image</th>
+				<th class="text-end">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for livre_image in livre_images %}
+				<tr>
+					<td>{{ livre_image.id }}</td>
+					<td>{{ livre_image.nom }}</td>
+					<td>{{ livre_image.updatedAt ? livre_image.updatedAt|date('d-m-Y H:i:s') : 'N/A' }}</td>
+					<td>
+						{% if livre_image.imageName is defined and livre_image.imageName is not null %}
+							<a href="{{asset('images/livre/' ~ livre_image.imageName)}}" data-lightbox="image-{{ loop.index0 }}" data-title="{{ livre_image.imageName}}">
+								<img src="{{ asset('images/livre/' ~ livre_image.imageName)}}" alt="" class="img-admin-small">
+							</a>
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+					<td class="text-end">
+						<a href="{{ path('app_admin_livre_image_show', {'id': livre_image.id}) }}" class="btn btn-dark">
+							<i class="align-middle" data-feather="eye"></i>
+						</a>
+						<a href="{{ path('app_admin_livre_image_edit', {'id': livre_image.id}) }}" class="btn btn-success ms-2">
+							<i class="align-middle" data-feather="edit-2"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
